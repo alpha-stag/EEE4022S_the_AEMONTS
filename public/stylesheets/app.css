@@ -1,0 +1,23 @@
+body, html{
+    height: 100%;
+}
+
+#homeImage{
+    background-image: url("https://i1.wp.com/biophysicsworkshop.co.za/wp-content/uploads/sites/40/2019/11/UCT-square.png?ssl=1");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+
+#cd{
+	margin: 30px auto;
+}
+
+.sz{
+ width: 50%
+}
+
+.lt{
+ margin-left: 30%;
+}

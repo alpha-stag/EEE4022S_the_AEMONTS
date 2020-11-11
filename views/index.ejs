@@ -1,0 +1,24 @@
+<%- include('partials/header') %>
+<li class='nav-item'>
+	<a class='nav-link' href="/">home</a>
+</li>
+</div>
+</nav>
+<h1>Welcome to the index page</h1>
+
+<% equipmentData.forEach(function(items){ %>
+    <div class='card' style='margin-bottom:10px; width:50%'>
+        <div>
+            <span>Equipment name: </span><%= items.name %>
+         </div>
+         <div>
+             <span>Student number: </span><%= items.stdnum %>
+         </div>
+	 <div>
+		<span>Equipment ID: </span><%=items.ID %>
+	 </div> 
+         <a href="/home/<%= items._id %>">show more</a>
+    </div>
+<% }); %>
+
+<%- include('partials/footer') %>

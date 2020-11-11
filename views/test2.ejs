@@ -1,0 +1,12 @@
+<h2> Welcome to the test page </h2>
+
+<%=dataToSend%>
+<%for (i=0; i<foundItem.length;i++){%>
+        <%if (foundItem.ID){%>
+                <div> The equipment with the ID "<%=foundItem.ID%>" has been accounted for </div>
+        <%} else{%>
+                <div> The tag has not been logged into the database </div>
+        <%}%>
+<%};%>
+
+

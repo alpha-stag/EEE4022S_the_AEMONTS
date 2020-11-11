@@ -1,0 +1,22 @@
+<h1>Edit the database</h1>
+
+    <form class= action="/home/<%= home._id %>?_method=PUT" method="POST">
+        <div>
+            <label for="">Student Number</label>
+            <input type="text" name="foundItem[stdnum]" value="<%= foundItem.stdnum %>">
+        </div>
+        <div>
+            <label for="">Equipment ID</label>
+            <input type="text" name="foundItem[name]" value="<%= foundItem.name %>">
+        </div>
+        <div>
+            <label for="">Equipment Status</label>
+            <input type="text" name="foundItem[status]" value="<%= foundItem.status %>">
+        </div>
+        <div>
+            <label for="">Name</label>
+            <input type="text" name="foundItem[image]" value="<%= foundItem.image %>">
+        </div>
+        
+        <input type="submit">
+    </form>

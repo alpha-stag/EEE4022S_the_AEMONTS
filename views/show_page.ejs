@@ -1,0 +1,30 @@
+<%- include("partials/header") %>
+<li class='nav-item'>
+	<a class='nav-link' href="/">home</a>
+</li>
+</div>
+</nav>
+<h1>Welcome to the show page</h1>
+
+<div id='cd' class='card' style='width: 31rem;'>
+ <ul class='list-group list-group-flush'>
+     <li class='list-group-item'>
+        <span>Equipment name: </span><%= equipData.name %>
+     </li>
+     <li class='list-group-item'>
+         <span>Student number: </span><%= equipData.stdnum %>
+     </li>
+     <li class='list-group-item'>
+         <span>Equipment ID: </span><%=equipData.ID%>
+     </li>
+     <li class='list-group-item'>
+         <%= equipData.date %>
+     </li>
+ </ul>
+     <form action="/home/<%= equipData._id %>?_method=DELETE" method="POST">
+        <a class='btn btn-outline-success' href='/home'>back</a>
+        <button class='btn btn-outline-danger'>delete</button>
+    </form>
+</div>
+
+<%- include("partials/footer") %>

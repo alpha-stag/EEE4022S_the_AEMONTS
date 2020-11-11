@@ -1,0 +1,119 @@
+var express		= require("express"), // include the express framework
+    app			= express(), // store the express function into a variable
+    {spawn}		= require("child_process"),
+    bodyParser		= require("body-parser"), // include the Body-Parser package
+    mongoose		= require("mongoose"), // include the mongoose server
+    nodemailer		= require("nodemailer"), // to send emails
+    methodOverride	= require("method-override"), // to set up our put and delete requests
+    mongoURL		= 'mongodb+srv://user1:96701@cluster0.foscy.gcp.mongodb.net/Auto_Equipment?retryWrites=true&w=majority';
+
+app.set("view engine","ejs"); // to avoid having to use the .ejs extension when$
+app.use(bodyParser.urlencoded({extended: true})); // use the body parser package
+app.use(express.static("public"));
+app.use(methodOverride("_method"));
+
+mongoose.connect(mongoURL,{
+                useNewUrlParser: true,
+                useUnifiedTopology: true
+});
+mongoose.connection.on("connected",function(){
+        console.log("Mongoose is connected");
+});
+
+// User names and passwords
+//=======================================================
+//mongoDb atlas
+//---------------------
+//password: 96701,
+// username: user1}
+//=======================================================
+// dummy email adress to send emails:
+var myEmail = 'dmail3867@gmail.com';
+var myPassword = '99BTVdM77';
+//=======================================================
+// destination email address
+var destEmail = 'malalamabia@gmail.com'
+//=======================================================
+
+// setup the schema for the database
+var equipmentSchema = new mongoose.Schema({
+    name:   		{type: String, default: "000000"}, //this is the equipment name/id
+//    stdTag: 		{type: String, default: "000000000000"}, //student card tag number
+    stdnum: 		{type: String, default: "UCTSTD001"}, // student number 
+    //video_directory:	{type: String,default: "/home/pi/Desktop/video.h264"},
+    ID :  String, // equipment tag ID
+    date: {type: Date, default: Date.now} //created should be a date and the default value is Date.now
+});
+
+
+// compile the schema into a model
+var Equipment = new mongoose.model("equipment",equipmentSchema);
+// var Student = new mongoose.model("student", studentSchema);
+
+//pre-populate database 
+// Equipment.create({
+//     ID:   "000000000000", 
+// });
+
+// Student.create({
+//     stdnum: "MLLALU001"
+// });
+
+//==================================================================================================================
+// Functions
+//==================================================================================================================
+
+// compare two arrays 
+function compare(arr1,arr2){
+	var finalArray = [];
+
+	arr1.forEach(function(value1){
+		arr2.forEach(function(value2){
+			if (value1 === value2){
+				finalArray.push(value1)
+			}
+		});
+	});
+	return finalArray
+}
+
+//array1 = [2,1,4,7,6,55];
+//array2 = [2];
+
+//var result = compare(array1,array2);
+//console.log("The result was: " + result);
+//--------------------------------------------------------------------------------------------------------------------
+
+// Monitoring function
+function monitor(){
+    var dataToSend;
+    var mylist = [];
+    var mylist2 = [];
+    var finalList = [];
+
+    //spawn new child process to call the python script
+    var python = spawn("python",["py1.py"]);
+    //collect data from the script
+    python.stdout.on("data",function(data){
+    		dataToSend = data.toString(); //data from python script
+		 Equipment.find({}, function(error, foundItem){
+                if(error){
+                        console.log("An error occurred");
+                } else{
+                        foundItem.forEach(function(item){
+                                var new_item = item.ID + "\n"
+                                mylist.push(new_item);
+                        });
+			console.log(mylist);
+
+		}
+   });
+});
+// monitor the lab equipment every second
+//setInterval(monitor,1000);
+
+
+// Start the application
+app.listen(3000, function(){
+    console.log("The Automated Equipment Theft Monitoring App has started has started");
+});
